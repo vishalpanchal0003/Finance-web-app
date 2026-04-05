@@ -34,12 +34,12 @@ const AdminPannel = () => {
         <Link to="/adminpannel/alltransactions" className="px-3 py-2 rounded-lg hover:bg-white/10 whitespace-nowrap">
           Transactions
         </Link>
-<div className="p-3 sm:p-0 sm:fixed sm:bottom-6 sm:left-6 w-full sm:w-auto">
+<div className="w-full max-w-full overflow-hidden sm:fixed sm:bottom-6 sm:left-6 sm:w-auto">
   <button
     onClick={Leave}
-    className="w-full sm:w-auto bg-red-500 hover:bg-red-600 active:scale-95 transition px-3 py-3 sm:py-2 rounded-xl font-semibold shadow-lg text-sm sm:text-base"
+    className="w-full max-w-full mt-[10px] bg-red-300 hover:bg-red-600 active:scale-80 rounded-2xl transition px-1 py-1  font-semibold shadow-lg text-sm"
   >
-    Leave
+    ❌
   </button>
 </div>
       </div>

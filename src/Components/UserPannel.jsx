@@ -15,17 +15,20 @@ const UserPannel = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-900 via-slate-900 to-black p-4 text-white">
 
-      <h1 className="text-xl sm:text-2xl font-bold mb-4">
-        User Dashboard
-      </h1>
- <div className="p-3 sm:p-4 flex justify-center sm:justify-end">
-  <button
-    onClick={Leave}
-    className="w-full sm:w-auto bg-red-500 hover:bg-red-400 active:scale-95 transition px-5 py-3 sm:py-2 rounded-xl mt[-20px] font-semibold shadow-lg text-sm sm:text-base"
-  >
-    Leave
-  </button>
-</div>
+      <div className=" bg-gradient-to-br from-blue-90 text-white px-4 sm:px-6 py-4 flex justify-between items-center">
+        <h1 className="text-lg sm:text-xl font-semibold">
+          Finance Dashboard
+        </h1>
+
+        <div className="flex items-center gap-3 text-sm">
+          <button
+            onClick={Leave}
+            className="bg-red-500 hover:bg-red-600 px-3 py-1 rounded-md text-white text-sm"
+          >
+            Leave
+          </button>
+        </div>
+      </div>
       <ComponentsCard />
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
