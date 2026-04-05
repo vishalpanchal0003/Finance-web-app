@@ -37,7 +37,7 @@ const AdminPannel = () => {
 <div className="p-3 sm:p-0 sm:fixed sm:bottom-6 sm:left-6 w-full sm:w-auto">
   <button
     onClick={Leave}
-    className="w-full sm:w-auto bg-red-500 hover:bg-red-600 active:scale-95 transition px-5 py-3 sm:py-2 rounded-xl font-semibold shadow-lg text-sm sm:text-base"
+    className="w-full sm:w-auto bg-red-500 hover:bg-red-600 active:scale-95 transition px-3 py-3 sm:py-2 rounded-xl font-semibold shadow-lg text-sm sm:text-base"
   >
     Leave
   </button>
