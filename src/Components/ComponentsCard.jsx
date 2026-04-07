@@ -8,15 +8,15 @@ const ComponentsCard = () => {
     return transactions
       .filter(t => t.type === "income")
       .reduce((acc, t) => acc + Number(t.amount || 0), 0);
-  }, [transactions]); // ✅ dependency add करो
+  }, [transactions]); 
 
   const expense = useMemo(() => {
     return transactions
       .filter(t => t.type === "expense")
       .reduce((acc, t) => acc + Number(t.amount || 0), 0);
-  }, [transactions]); // ✅ यहाँ भी useMemo use करो
+  }, [transactions]); 
 
-  const balance = income - expense;
+  const balance = useMemo(() => income - expense,[income,expense])
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 p-4">

@@ -1,17 +1,23 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { AppContext } from '../Context/AppContext'
+import { UseToast } from './TosterContext'
 
 const TransactionData = () => {
+  const {setToast} = UseToast()
   const { transactions, setTransactions, role } = useContext(AppContext)
   const [searchVal, setSearchVal] = useState('')
   const [sortType, setSortType] = useState('all')
 
-  useEffect(() => {
-    const data = localStorage.getItem("Transactions");
-    if (data) {
-      setTransactions(JSON.parse(data));
-    }
-  }, [setTransactions]);
+
+  // useEffect(() => {
+  //   const data = localStorage.getItem("Transactions");
+  //   if (data) {
+  //     setTransactions(JSON.parse(data));
+  //   }
+  // }, [setTransactions]);
+
+
+
 
   // ✅ Search filter
   const searchFiltered = transactions.filter((item) => {
@@ -30,8 +36,13 @@ const TransactionData = () => {
     return true;
   });
 
+
+  // Toster
+  
+
   const handledDleteTransation = (idx) => {
     const deleteTransaction = transactions.filter((_, index) => index !== idx);
+    setToast({ show: true, message: "Transaction is deleted" , color:"bg-red-500" });
     setTransactions(deleteTransaction);
     localStorage.setItem("Transactions", JSON.stringify(deleteTransaction));
   };
@@ -54,42 +65,39 @@ const TransactionData = () => {
           />
 
           {/* Sort/Filter Select */}
-<div className="mb-4">
-  <div className="flex gap-2 bg-white/5 p-1 rounded-lg border border-white/10">
-    <button
-      onClick={() => setSortType('all')}
-      className={`flex-1 px-3 sm:px-4 py-2 sm:py-3 rounded-md font-medium transition-all duration-200 text-xs sm:text-sm ${
-        sortType === 'all'
-          ? 'bg-blue-500 text-white shadow-lg'
-          : 'text-gray-400 hover:text-white'
-      }`}
-    >
-      📋 All
-    </button>
+          <div className="mb-4">
+            <div className="flex gap-2 bg-white/5 p-1 rounded-lg border border-white/10">
+              <button
+                onClick={() => setSortType('all')}
+                className={`flex-1 px-3 sm:px-4 py-2 sm:py-3 rounded-md font-medium transition-all duration-200 text-xs sm:text-sm ${sortType === 'all'
+                    ? 'bg-blue-500 text-white shadow-lg'
+                    : 'text-gray-400 hover:text-white'
+                  }`}
+              >
+                📋 All
+              </button>
 
-    <button
-      onClick={() => setSortType('income')}
-      className={`flex-1 px-3 sm:px-4 py-2 sm:py-3 rounded-md font-medium transition-all duration-200 text-xs sm:text-sm ${
-        sortType === 'income'
-          ? 'bg-green-500 text-white shadow-lg'
-          : 'text-gray-400 hover:text-white'
-      }`}
-    >
-      💚 Income
-    </button>
+              <button
+                onClick={() => setSortType('income')}
+                className={`flex-1 px-3 sm:px-4 py-2 sm:py-3 rounded-md font-medium transition-all duration-200 text-xs sm:text-sm ${sortType === 'income'
+                    ? 'bg-green-500 text-white shadow-lg'
+                    : 'text-gray-400 hover:text-white'
+                  }`}
+              >
+                💚 Income
+              </button>
 
-    <button
-      onClick={() => setSortType('expense')}
-      className={`flex-1 px-3 sm:px-4 py-2 sm:py-3 rounded-md font-medium transition-all duration-200 text-xs sm:text-sm ${
-        sortType === 'expense'
-          ? 'bg-red-500 text-white shadow-lg'
-          : 'text-gray-400 hover:text-white'
-      }`}
-    >
-      ❤️ Expense
-    </button>
-  </div>
-</div>
+              <button
+                onClick={() => setSortType('expense')}
+                className={`flex-1 px-3 sm:px-4 py-2 sm:py-3 rounded-md font-medium transition-all duration-200 text-xs sm:text-sm ${sortType === 'expense'
+                    ? 'bg-red-500 text-white shadow-lg'
+                    : 'text-gray-400 hover:text-white'
+                  }`}
+              >
+                ❤️ Expense
+              </button>
+            </div>
+          </div>
         </div>
 
         {/* Transactions List */}

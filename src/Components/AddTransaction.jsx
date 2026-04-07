@@ -1,7 +1,9 @@
 import React, { useContext, useEffect, useState } from "react";
 import { AppContext } from "../Context/AppContext";
+import { UseToast } from "./TosterContext";
 
 const AddTransaction = () => {
+  const {setToast} = UseToast()
   const { transactions, setTransactions } = useContext(AppContext);
   const [isShowIncome, setIsShowIncome] = useState(false);
   const [isShowExpense, setIsShowExpense] = useState(false);
@@ -41,10 +43,12 @@ const AddTransaction = () => {
   const data = type === "income" ? income : expense;
   
   if (data.amount <= 0) {
-    return alert("Amount must be greater than 0");
+   setToast({ show: true, message: "amount  is required !" ,color:"bg-red-500"});
+  return null 
   }
   if (!data.title.trim()) {
-    return alert("Title required");
+   setToast({ show: true, message: "Title  is required !",color:"bg-red-500" });
+  return null
   }
   
   setTransactions((prev) => [...prev, {
@@ -57,49 +61,10 @@ const AddTransaction = () => {
   type === "income" 
     ? setIncome({ title: "", amount: 0 })
     : setExpense({ title: "", amount: 0 });
-};
-//   const handleIncome = (e) => {
-//     e.preventDefault();
-//      if(income.amount<=0){
-//       return alert("Fields are empty")
-//      }
-//          if (!income.title.trim()) {
-//   return alert("Title required");
-// }
-//     setTransactions((prev) => [...prev, {
-//   amount: Number(income.amount),
-//     title: income.title,
-//   type: "income",
-//   date: new Date()
-// }]);
-//     setIncome({
-//       title:"",
-//       amount:0
-//     });
-//   };
+    setToast({show:true,message:"Transactions added",color:"bg-green-500"})
 
-//   const handleExpense = (e) => {
-//     e.preventDefault();
-//     if(expense.amount<=0){
-//      return  alert("Fields are empty")
-//     }
-//     if (!expense.title.trim()) {
-//   return alert("Title required");
-// }
-//     setTransactions((prev) => [
-//       ...prev,
-//       {
-//   amount: Number(expense.amount),
-//   title: expense.title,
-//   type: "expense",
-//   date: new Date()
-// }
-//     ]);
-//     setExpense({
-//       amount: 0,
-//       title: "",
-//     });
-//   };
+};
+
 
   const handleIsShowIncome = () => {
     setIsShowIncome(true);
@@ -150,7 +115,7 @@ const AddTransaction = () => {
                 name="amount"
                 type="number"
                 min={0}
-                required
+                // required
                 placeholder="₹ Enter amount"
                 onWheel={(e) => e.target.blur()}
                 value={expense.amount}
@@ -162,7 +127,7 @@ const AddTransaction = () => {
                 type="text"
                 name="title"
                 placeholder="Enter Title"
-                required
+                // required
                 value={expense.title}
                 onChange={handleExpenseOnchange}
                 className="w-full p-3 rounded-xl bg-white/10 border border-white/20 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-400"
@@ -186,7 +151,7 @@ const AddTransaction = () => {
             <form className="flex flex-col gap-4" onSubmit={(e)=>handleAddTransaction(e,"income")}>
               <input
                 min={0}
-                required
+                // required
                 value={income.amount}
             onChange={handleIncomeOnchange}
                 name="amount"
@@ -196,7 +161,7 @@ const AddTransaction = () => {
                 className="w-full p-3 rounded-xl bg-white/10 border border-white/20 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-400"
               />
               <input
-                required
+                // required
                 value={income.title}
             onChange={handleIncomeOnchange}
                 name="title"
