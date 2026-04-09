@@ -1,25 +1,14 @@
 import React, { useContext, useState } from 'react'
 import { AppContext } from '../Context/AppContext'
-import { UseToast } from './TosterContext'
+import toast,{Toaster} from 'react-hot-toast'
 
 const TransactionData = () => {
-  const {setToast} = UseToast()
   const { transactions, setTransactions, role } = useContext(AppContext)
   const [searchVal, setSearchVal] = useState('')
   const [sortType, setSortType] = useState('all')
 
 
-  // useEffect(() => {
-  //   const data = localStorage.getItem("Transactions");
-  //   if (data) {
-  //     setTransactions(JSON.parse(data));
-  //   }
-  // }, [setTransactions]);
-
-
-
-
-  // ✅ Search filter
+  //  Search filter
   const searchFiltered = transactions.filter((item) => {
     const search = searchVal.toLowerCase();
     return (
@@ -28,7 +17,7 @@ const TransactionData = () => {
     );
   });
 
-  // ✅ Sort filter
+  //  Sort filter
   const filteredData = searchFiltered.filter((item) => {
     if (sortType === "all") return true;
     if (sortType === "income") return item.type === "income";
@@ -42,13 +31,14 @@ const TransactionData = () => {
 
   const handledDleteTransation = (idx) => {
     const deleteTransaction = transactions.filter((_, index) => index !== idx);
-    setToast({ show: true, message: "Transaction is deleted" , color:"bg-red-500" });
+    toast.success("delete successfully"),
     setTransactions(deleteTransaction);
     localStorage.setItem("Transactions", JSON.stringify(deleteTransaction));
   };
 
   return (
     <div className="p-4">
+    <Toaster/>
       <div className="overflow-x-auto">
         <h2 className="text-xl font-bold mb-4 text-white">
           Transactions
@@ -114,8 +104,9 @@ const TransactionData = () => {
                   ₹{t.amount}
                 </p>
 
-                <p className="text-sm text-gray-300">
-                  {new Date(t.date).toLocaleDateString()}
+                <p className="text-sm text-gray-300">                 
+                   {/* {t.date.toLocaleDateString('en-IN')} */}
+                     {new Date(t.date).toLocaleDateString('en-IN')}
                 </p>
               </div>
 

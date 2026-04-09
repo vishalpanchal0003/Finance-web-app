@@ -1,20 +1,21 @@
 import React, { useContext, useEffect, useState } from "react";
 import { AppContext } from "../Context/AppContext";
-import { UseToast } from "./TosterContext";
+import toast, { Toaster } from "react-hot-toast";
 
 const AddTransaction = () => {
-  const {setToast} = UseToast()
   const { transactions, setTransactions } = useContext(AppContext);
   const [isShowIncome, setIsShowIncome] = useState(false);
   const [isShowExpense, setIsShowExpense] = useState(false);
   const [income, setIncome] = useState({
     title:"",
     amount: 0,
+    date:""
 
   });
   const [expense, setExpense] = useState({
     title: "",
     amount: 0,
+    date:""
 
   });
 
@@ -43,25 +44,29 @@ const AddTransaction = () => {
   const data = type === "income" ? income : expense;
   
   if (data.amount <= 0) {
-   setToast({ show: true, message: "amount  is required !" ,color:"bg-red-500"});
+  toast.error("Amount is required")
   return null 
   }
   if (!data.title.trim()) {
-   setToast({ show: true, message: "Title  is required !",color:"bg-red-500" });
+  toast.error("Title is required")
   return null
+  }
+  if(!data.date){
+    toast.error("Date is required!")
+    return null
   }
   
   setTransactions((prev) => [...prev, {
     amount: Number(data.amount),
     title: data.title,
     type: type,
-    date: new Date()
+      date: new Date(data.date).toISOString()
   }]);
   
   type === "income" 
-    ? setIncome({ title: "", amount: 0 })
-    : setExpense({ title: "", amount: 0 });
-    setToast({show:true,message:"Transactions added",color:"bg-green-500"})
+    ? setIncome({ title: "", amount: 0,date:"" })
+    : setExpense({ title: "", amount: 0 ,date:""});
+    toast.success("Transaction is added")
 
 };
 
@@ -78,6 +83,7 @@ const AddTransaction = () => {
 
   return (
     <div className="transition-all duration-300 ease-in-out min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-900 via-slate-900 to-black p-4">
+     <Toaster/>
       <div className="max-w-md w-full bg-white/10 backdrop-blur-xl border border-white/20 shadow-2xl rounded-3xl p-6 text-white">
         <h2 className="text-xl font-bold text-center mb-6">Add Transaction</h2>
         
@@ -132,7 +138,15 @@ const AddTransaction = () => {
                 onChange={handleExpenseOnchange}
                 className="w-full p-3 rounded-xl bg-white/10 border border-white/20 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-400"
               />
-
+                 <input
+                type="date"
+                name="date"
+                placeholder="Enter Title"
+                // required
+                value={expense.date}
+                onChange={handleExpenseOnchange}
+                className="w-full p-3 rounded-xl bg-white/10 border border-white/20 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-400"
+              />
               <button
                 type="submit"
                 className="bg-red-400 backdrop-blur-md text-white py-3 rounded-xl font-medium hover:bg-blue-500 transition"
@@ -166,6 +180,16 @@ const AddTransaction = () => {
             onChange={handleIncomeOnchange}
                 name="title"
                 type="text"
+                placeholder=" Enter Title"
+                onWheel={(e) => e.target.blur()}
+                className="w-full p-3 rounded-xl bg-white/10 border border-white/20 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-400"
+              />
+
+              <input
+                value={income.date}
+            onChange={handleIncomeOnchange}
+                name="date"
+                type="date"
                 placeholder=" Enter Title"
                 onWheel={(e) => e.target.blur()}
                 className="w-full p-3 rounded-xl bg-white/10 border border-white/20 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-400"

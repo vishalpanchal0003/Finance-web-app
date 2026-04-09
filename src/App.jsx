@@ -5,13 +5,10 @@ import Access from "./Components/Access";
 import UserPannel from "./Components/UserPannel";
 import AdminPanel from "./Components/AdminPannel";
 import ProtectedRoute from "../proteced/ProtectedRoute"
-import { ToastProvider } from "./Components/TosterContext";
 
 function App() {
   return (
     <AppProvider>
-      <ToastProvider>
-
         <Routes>
           <Route path="/" element={<Access />} />
 
@@ -33,8 +30,6 @@ function App() {
             }
           />
         </Routes>
-
-      </ToastProvider>
     </AppProvider>
   );
 }

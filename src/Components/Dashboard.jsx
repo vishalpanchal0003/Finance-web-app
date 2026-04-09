@@ -1,5 +1,6 @@
 import React, { lazy, Suspense } from 'react'
 import Insights from './Insights '
+import { Toaster } from 'react-hot-toast'
 const ComponentsCard = lazy(() => import('./ComponentsCard'))
 const LineCharts = lazy(() => import('./LineChart'))
 const BarCharts = lazy(() => import('./BarChart'))
@@ -8,7 +9,7 @@ const BarCharts = lazy(() => import('./BarChart'))
 const Dashboard = () => {
   return (
     <div className="p-4 space-y-4">
-
+<Toaster/>
    <Suspense fallback={<Loading />}>
   <ComponentsCard />
   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
