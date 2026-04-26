@@ -29,13 +29,13 @@ const AdminPannel = () => {
       <div className="md:hidden w-full flex items-center justify-between px-4 py-3 bg-gray-900/90 border-b border-white/10 backdrop-blur-md z-50">
         <div className="flex bg-black/40 rounded-full p-1 border border-white/10 flex-1 max-w-[280px]">
           <Link to="/adminpannel/dashboard" className="flex-1 text-center py-1.5 text-xs font-medium text-blue-400 hover:bg-white/5 rounded-full transition-all"> 
-            Dash
+            Dashboard
           </Link>
           <Link to="/adminpannel/addtransaction" className="flex-1 text-center py-1.5 text-xs font-medium text-blue-400 hover:bg-white/5 rounded-full transition-all">
-            Add
+            Add Transaction
           </Link>
           <Link to="/adminpannel/alltransactions" className="flex-1 text-center py-1.5 text-xs font-medium text-blue-400 hover:bg-white/5 rounded-full transition-all"> 
-            Txns 
+            Transactions
           </Link>
         </div>
         <button onClick={Leave} className="ml-3 bg-rose-500/20 text-rose-500 border border-rose-500/30 px-3 py-1.5 rounded-lg text-xs font-bold active:scale-95 transition-all"> 
