@@ -29,7 +29,7 @@ const UserPannel = () => {
       <div className=" bg-gradient-to-br from-blue-90 text-white px-4 sm:px-6 py-4 flex justify-between items-center">
         <h1 className="text-lg sm:text-xl font-semibold"> Finance Dashboard </h1>
         <div className="flex items-center gap-3 text-sm">
-          <button onClick={Leave} className="bg-red-500 hover:bg-red-600 px-3 py-1 rounded-md text-white text-sm" > Leave </button>
+          <button onClick={Leave} className="bg-red-500 hover:bg-red-600 px-3 py-1 rounded-md text-white text-sm" > LogOut </button>
         </div>
       </div>
       <ComponentsCard />

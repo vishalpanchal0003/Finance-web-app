@@ -57,6 +57,7 @@ const AddTransaction = () => {
   }
   
   setTransactions((prev) => [...prev, {
+   id: Date.now(),
     amount: Number(data.amount),
     title: data.title,
     type: type,
@@ -67,6 +68,7 @@ const AddTransaction = () => {
     ? setIncome({ title: "", amount: 0,date:"" })
     : setExpense({ title: "", amount: 0 ,date:""});
     toast.success("Transaction is added")
+    console.log("date",transactions)
 
 };
 

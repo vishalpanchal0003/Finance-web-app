@@ -18,60 +18,80 @@ const AdminPannel = () => {
     toast.success(' Logout successful!', {
       position: 'top-right',
       autoClose: 1000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
     });
   };
 
-
   return (
-    <div className="min-h-screen flex flex-col md:flex-row bg-gradient-to-br from-blue-900 via-slate-900 to-black text-white">
-      <div className="md:hidden w-full flex justify-center px-3 py-3 gap-2">
-        <div className="flex w-full max-w-sm bg-gray-900/80 rounded-full p-1 border border-gray-700">
-          <Link to="/adminpannel/dashboard" className="flex-1 text-center py-2 text-blue-400"> 
-          Dashboard
+    // Parent container ko h-screen aur overflow-hidden diya taki poora page ek sath scroll na ho
+    <div className="h-screen w-full flex  flex-col md:flex-row bg-gradient-to-br from-slate-950 via-blue-950 to-black text-white overflow-hidden">
+      
+      {/* MOBILE NAVIGATION - Fixed at top */}
+      <div className="md:hidden w-full flex items-center justify-between px-4 py-3 bg-gray-900/90 border-b border-white/10 backdrop-blur-md z-50">
+        <div className="flex bg-black/40 rounded-full p-1 border border-white/10 flex-1 max-w-[280px]">
+          <Link to="/adminpannel/dashboard" className="flex-1 text-center py-1.5 text-xs font-medium text-blue-400 hover:bg-white/5 rounded-full transition-all"> 
+            Dash
           </Link>
-          <Link to="/adminpannel/addtransaction" className="flex-1 text-center py-2 text-blue-400">
-           Add </Link>
-          <Link to="/adminpannel/alltransactions" className="flex-1 text-center py-2 text-blue-400"> Transactions </Link>
+          <Link to="/adminpannel/addtransaction" className="flex-1 text-center py-1.5 text-xs font-medium text-blue-400 hover:bg-white/5 rounded-full transition-all">
+            Add
+          </Link>
+          <Link to="/adminpannel/alltransactions" className="flex-1 text-center py-1.5 text-xs font-medium text-blue-400 hover:bg-white/5 rounded-full transition-all"> 
+            Txns 
+          </Link>
         </div>
-        <button onClick={Leave} className="bg-red-500 px-2 h-[30px] mt-[10px] rounded-md text-white text-sm"> Leave </button>
-      </div>
-      <div className="hidden md:flex w-64 h-screen bg-white/10 p-5 flex-col justify-between">
-        <div>
-          <h2 className="text-lg font-bold mb-4">Admin Dashboard</h2>
-          <Link to="/adminpannel/dashboard" className="block py-2">Dashboard</Link>
-          <Suspense fallback={<Loading />}>
-            <Link to="/adminpannel/addtransaction" className="block py-2">Add</Link>
-          </Suspense>
-          <Link to="/adminpannel/alltransactions" className="block py-2">Transactions</Link>
-        </div>
-
-        <button onClick={Leave} className="bg-red-500 py-2 rounded-md">
-          Leave
+        <button onClick={Leave} className="ml-3 bg-rose-500/20 text-rose-500 border border-rose-500/30 px-3 py-1.5 rounded-lg text-xs font-bold active:scale-95 transition-all"> 
+          Leave 
         </button>
       </div>
 
-      <div className="flex-1 p-4">
-        <Routes>
-          <Route path="dashboard" element={<Dashboard />} />
-          <Route path="addtransaction" element={<AddTransaction />} />
-          <Route path="alltransactions" element={<TransactionData />} />
-        </Routes>
+      {/* DESKTOP SIDEBAR - Fixed height, no scroll */}
+      <div className="hidden md:flex w-64 h-full bg-white/5 border-r border-white/10 p-6 flex-col justify-between backdrop-blur-xl">
+        <div>
+          <div className="flex items-center gap-2 mb-8 px-2">
+            <div className="w-8 h-8 bg-blue-500 rounded-lg shadow-[0_0_15px_rgba(59,130,246,0.5)]"></div>
+            <h2 className="text-xl font-black tracking-tight">ADMIN</h2>
+          </div>
+          
+          <nav className="space-y-1">
+            <Link to="/adminpannel/dashboard" className="block px-4 py-3 rounded-xl hover:bg-white/5 text-gray-400 hover:text-white transition-all font-medium border border-transparent hover:border-white/10">Dashboard</Link>
+            <Link to="/adminpannel/addtransaction" className="block px-4 py-3 rounded-xl hover:bg-white/5 text-gray-400 hover:text-white transition-all font-medium border border-transparent hover:border-white/10">Add Transaction</Link>
+            <Link to="/adminpannel/alltransactions" className="block px-4 py-3 rounded-xl hover:bg-white/5 text-gray-400 hover:text-white transition-all font-medium border border-transparent hover:border-white/10">Transactions History</Link>
+          </nav>
+        </div>
+
+        <button 
+          onClick={Leave} 
+          className="w-full py-3 rounded-xl bg-gradient-to-r from-rose-600 to-red-700 hover:from-rose-500 hover:to-red-600 font-bold shadow-lg shadow-red-900/20 active:scale-[0.98] transition-all"
+        >
+          Logout
+        </button>
       </div>
 
+      {/* MAIN CONTENT AREA - Only this part will scroll */}
+      <main className="flex-1 h-full overflow-y-auto custom-scrollbar relative">
+        <div className="p-4 md:p-8 max-w-7xl mx-auto">
+          <Suspense fallback={<Loading />}>
+            <Routes>
+              <Route path="dashboard" element={<Dashboard />} />
+              <Route path="addtransaction" element={<AddTransaction />} />
+              <Route path="alltransactions" element={<TransactionData />} />
+            </Routes>
+          </Suspense>
+        </div>
+      </main>
+
+      <Toaster />
     </div>
   )
 }
 
 export default AdminPannel
 
+// Improved Loading UI
 function Loading() {
   return (
-    <div className="flex items-center justify-center min-h-screen bg-transparent">
-      <div className="min-w-1/2 h-12 border-4 border-gray-700 border-t-blue-500 rounded-full animate-spin"></div>
+    <div className="flex flex-col items-center justify-center min-h-[60vh] gap-4">
+      <div className="w-12 h-12 border-4 border-white/10 border-t-blue-500 rounded-full animate-spin"></div>
+      <p className="text-gray-500 font-medium animate-pulse">Loading Panel...</p>
     </div>
   )
 }
