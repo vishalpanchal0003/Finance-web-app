@@ -2,7 +2,7 @@ import React from "react";
 import { Route, Routes } from "react-router-dom";
 import { AppProvider } from "./Context/AppProvider";
 import Access from "./Components/Access";
-import UserPannel from "./Components/UserPannel";
+// import UserPannel from "./Components/UserPannel";
 import AdminPanel from "./Components/AdminPannel";
 import ProtectedRoute from "../proteced/ProtectedRoute"
 
@@ -20,16 +20,7 @@ function App() {
               </ProtectedRoute>
             }
           />
-
-          <Route
-            path="/userpannel"
-            element={
-              <ProtectedRoute allowedRole="user">
-                <UserPannel />
-              </ProtectedRoute>
-            }
-          />
-        </Routes>
+          </Routes>
     </AppProvider>
   );
 }

@@ -14,13 +14,6 @@ const Access = () => {
     toast.success("Welcome to Admin pannel", { autoClose: 1000, })
   }
 
-  const User = () => {
-    setRole("user")
-    localStorage.setItem("role", "user")
-    navigate('/userpannel')
-    toast.success("Welcome to User pannel", { autoClose: 1000, })
-  }
-
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-900 via-blue-900 to-black text-white p-4">
       <Toaster />
@@ -29,10 +22,6 @@ const Access = () => {
 
         <button onClick={Admin} className="w-full mb-3 bg-green-500 py-3 rounded-xl">
           Admin Panel
-        </button>
-
-        <button onClick={User} className="w-full bg-blue-500 py-3 rounded-xl">
-          User Panel
         </button>
       </div>
     </div>

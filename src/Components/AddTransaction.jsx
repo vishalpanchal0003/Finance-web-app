@@ -1,8 +1,10 @@
 import React, { useContext, useEffect, useState } from "react";
 import { AppContext } from "../Context/AppContext";
 import toast, { Toaster } from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 const AddTransaction = () => {
+  const navigate = useNavigate()
   const { transactions, setTransactions } = useContext(AppContext);
   const [isShowIncome, setIsShowIncome] = useState(false);
   const [isShowExpense, setIsShowExpense] = useState(false);
@@ -62,13 +64,14 @@ const AddTransaction = () => {
     title: data.title,
     type: type,
       date: new Date(data.date).toISOString()
-  }]);
+  }
+]);
   
   type === "income" 
     ? setIncome({ title: "", amount: 0,date:"" })
     : setExpense({ title: "", amount: 0 ,date:""});
     toast.success("Transaction is added")
-    console.log("date",transactions)
+  navigate("/adminpannel/alltransactions")
 
 };
 

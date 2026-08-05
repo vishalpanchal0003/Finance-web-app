@@ -77,12 +77,16 @@ const TransactionData = () => {
   }
 
 
-  const handledDleteTransation = (idx) => {
-    const deleteTransaction = transactions.filter((_, item) => item.id !== idx.id);
-    toast.success("delete successfully"),
-      setTransactions(deleteTransaction);
-    localStorage.setItem("Transactions", JSON.stringify(deleteTransaction));
-  };
+const handleDeleteTransaction = (targetId) => {
+  const deleteTransaction = transactions.filter((transaction) => transaction.id !== targetId);  
+  setTransactions(deleteTransaction);
+  localStorage.setItem("Transactions", JSON.stringify(deleteTransaction));
+  if (deleteTransaction.length < transactions.length) {
+    toast.success("Deleted successfully");
+  } else {
+    toast.error("Transaction not found"); 
+  }
+};
 
   return (
     <div className="p-4">
@@ -140,9 +144,9 @@ const TransactionData = () => {
 
         {/* Transactions List */}
         {filteredData.length > 0 ? (
-          filteredData.map((t, idx) => (
+          filteredData.map((t, id) => (
             <div
-              key={idx}
+              key={id}
               className="flex flex-col sm:flex-row justify-between bg-white/10 p-4 mb-3 rounded-xl"
             >
               <div>
@@ -174,7 +178,7 @@ const TransactionData = () => {
                     </button>
 
                     <button
-                      onClick={() => handledDleteTransation(idx)}
+                      onClick={() => handleDeleteTransaction(t.id)}
                       className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded-lg"
                     >
                       Delete
