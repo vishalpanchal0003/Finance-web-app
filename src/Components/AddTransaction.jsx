@@ -84,9 +84,9 @@ const AddTransaction = () => {
   };
 
   return (
-    <div className="transition-all duration-300 ease-in-out min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-900 via-slate-900 to-black p-4">
+    <div className="transition-all duration-300 ease-in-out min-h-screen flex items-center justify-center p-4 overflow-y-hidden overflow-x-hidden">
      <Toaster/>
-      <div className="max-w-md w-full bg-white/10 backdrop-blur-xl border border-white/20 shadow-2xl rounded-3xl p-6 text-white">
+      <div className="max-w-md w-full bg-white/10 backdrop-blur-xl border border-white/20 shadow-2xl rounded-3xl p-6 text-white overflow-x-hidden">
         <h2 className="text-xl font-bold text-center mb-6">Add Transaction</h2>
         
         <div className="flex gap-3 mb-6 bg-white/10 p-1 rounded-xl">

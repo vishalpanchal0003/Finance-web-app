@@ -1,5 +1,5 @@
 import React, { lazy, Suspense, useContext } from 'react'
-import { Link, Route, Routes, useNavigate } from 'react-router-dom'
+import { Link, Route, Routes, useNavigate, NavLink, useLocation } from 'react-router-dom'
 import Dashboard from './Dashboard'
 import { AppContext } from '../Context/AppContext'
 import toast, { Toaster } from 'react-hot-toast'
@@ -10,40 +10,56 @@ const TransactionData = lazy(() => import('./TransactionData'))
 const AdminPannel = () => {
   const { setRole } = useContext(AppContext)
   const navigate = useNavigate()
+  const location = useLocation() // Current path check karne ke liye
 
   const Leave = () => {
     localStorage.removeItem("role")
     setRole(null)
     navigate('/')
-    toast.success(' Logout successful!', {
+    toast.success('Logout successful!', {
       position: 'top-right',
       autoClose: 1000,
     });
   };
 
+  // Helper function to get active classes
+  const getNavLinkClasses = ({ isActive }) => 
+    isActive
+      ? "text-blue-400 font-bold bg-blue-500/10 border-blue-500/30" // Active styles
+      : "text-gray-400 hover:text-white hover:bg-white/5 border-transparent"; // Inactive styles
+
   return (
-    // Parent container ko h-screen aur overflow-hidden diya taki poora page ek sath scroll na ho
-    <div className="h-screen w-full flex  flex-col md:flex-row bg-gradient-to-br from-slate-950 via-blue-950 to-black text-white overflow-hidden">
+    <div className="h-screen w-full flex flex-col md:flex-row bg-gradient-to-br from-slate-950 via-blue-950 to-black text-white overflow-hidden">
       
-      {/* MOBILE NAVIGATION - Fixed at top */}
+      {/* MOBILE NAVIGATION */}
       <div className="md:hidden w-full flex items-center justify-between px-4 py-3 bg-gray-900/90 border-b border-white/10 backdrop-blur-md z-50">
-        <div className="flex bg-black/40 rounded-full p-1 border border-white/10 flex-1 max-w-[280px]">
-          <Link to="/adminpannel/dashboard" className="flex-1 text-center py-1.5 text-xs font-medium text-blue-400 hover:bg-white/5 rounded-full transition-all"> 
-            Dashboard
-          </Link>
-          <Link to="/adminpannel/addtransaction" className="flex-1 text-center py-1.5 text-xs font-medium text-blue-400 hover:bg-white/5 rounded-full transition-all">
-            Add Transaction
-          </Link>
-          <Link to="/adminpannel/alltransactions" className="flex-1 text-center py-1.5 text-xs font-medium text-blue-400 hover:bg-white/5 rounded-full transition-all"> 
+        <div className="flex bg-black/40 p-1ipipip space-x-10 rounded-full p-1 border border-white/10 flex-1 max-w-[280px]">
+          <NavLink
+            to="/adminpannel/dashboard"
+            className={getNavLinkClasses}
+          > 
+            Dash
+          </NavLink>
+          
+          <NavLink
+            to="/adminpannel/addtransaction"
+            className={getNavLinkClasses}
+          >
+            Add 
+          </NavLink>
+          
+          <NavLink
+            to="/adminpannel/alltransactions"
+            className={getNavLinkClasses}
+          > 
             Transactions
-          </Link>
+          </NavLink>
         </div>
+        
         <button onClick={Leave} className="ml-3 bg-rose-500/20 text-rose-500 border border-rose-500/30 px-3 py-1.5 rounded-lg text-xs font-bold active:scale-95 transition-all"> 
           Leave 
         </button>
       </div>
-
-      {/* DESKTOP SIDEBAR - Fixed height, no scroll */}
       <div className="hidden md:flex w-64 h-full bg-white/5 border-r border-white/10 p-6 flex-col justify-between backdrop-blur-xl">
         <div>
           <div className="flex items-center gap-2 mb-8 px-2">
@@ -51,10 +67,45 @@ const AdminPannel = () => {
             <h2 className="text-xl font-black tracking-tight">ADMIN</h2>
           </div>
           
-          <nav className="space-y-1">
-            <Link to="/adminpannel/dashboard" className="block px-4 py-3 rounded-xl hover:bg-white/5 text-gray-400 hover:text-white transition-all font-medium border border-transparent hover:border-white/10">Dashboard</Link>
-            <Link to="/adminpannel/addtransaction" className="block px-4 py-3 rounded-xl hover:bg-white/5 text-gray-400 hover:text-white transition-all font-medium border border-transparent hover:border-white/10">Add Transaction</Link>
-            <Link to="/adminpannel/alltransactions" className="block px-4 py-3 rounded-xl hover:bg-white/5 text-gray-400 hover:text-white transition-all font-medium border border-transparent hover:border-white/10">Transactions History</Link>
+          <nav className="space-y-2">
+            <NavLink
+              to="/adminpannel/dashboard"
+              className={({ isActive }) =>
+                `block px-4 py-3 rounded-xl transition-all font-medium border ${
+                  isActive
+                    ? "text-blue-400 bg-blue-500/10 border-blue-500/30 shadow-[0_0_15px_rgba(59,130,246,0.15)]"
+                    : "text-gray-400 hover:bg-white/5 hover:text-white border-transparent hover:border-white/10"
+                }`
+              }
+            >
+              Dashboard
+            </NavLink>
+
+            <NavLink
+              to="/adminpannel/addtransaction"
+              className={({ isActive }) =>
+                `block px-4 py-3 rounded-xl transition-all font-medium border ${
+                  isActive
+                    ? "text-blue-400 bg-blue-500/10 border-blue-500/30 shadow-[0_0_15px_rgba(59,130,246,0.15)]"
+                    : "text-gray-400 hover:bg-white/5 hover:text-white border-transparent hover:border-white/10"
+                }`
+              }
+            >
+              Add Transaction
+            </NavLink>
+
+            <NavLink
+              to="/adminpannel/alltransactions"
+              className={({ isActive }) =>
+                `block px-4 py-3 rounded-xl transition-all font-medium border ${
+                  isActive
+                    ? "text-blue-400 bg-blue-500/10 border-blue-500/30 shadow-[0_0_15px_rgba(59,130,246,0.15)]"
+                    : "text-gray-400 hover:bg-white/5 hover:text-white border-transparent hover:border-white/10"
+                }`
+              }
+            >
+              Transactions History
+            </NavLink>
           </nav>
         </div>
 
@@ -66,7 +117,7 @@ const AdminPannel = () => {
         </button>
       </div>
 
-      {/* MAIN CONTENT AREA - Only this part will scroll */}
+
       <main className="flex-1 h-full overflow-y-auto custom-scrollbar relative">
         <div className="p-4 md:p-8 max-w-7xl mx-auto">
           <Suspense fallback={<Loading />}>
@@ -83,10 +134,6 @@ const AdminPannel = () => {
     </div>
   )
 }
-
-export default AdminPannel
-
-// Improved Loading UI
 function Loading() {
   return (
     <div className="flex flex-col items-center justify-center min-h-[60vh] gap-4">
@@ -95,3 +142,5 @@ function Loading() {
     </div>
   )
 }
+
+export default AdminPannel
